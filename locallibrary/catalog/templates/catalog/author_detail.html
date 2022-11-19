@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>About author</h1>
+    
+  <h2>{{ author.first_name }} {{ author.last_name }}</h2>
+
+  <p><strong>Birth/Death date: {{ author.date_of_birth}} - {{ author.date_of_death}}
+  <p><strong>Biografy:</strong> 
+
+  <div style="margin-left:20px;margin-top:20px">
+  
+
+    {% for copy in book.bookinstance_set.all %}
+    <hr>
+    <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'd' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
+    {% if copy.status != 'a' %}<p><strong>Due to be returned:</strong> {{copy.due_back}}</p>{% endif %}
+    <p><strong>Imprint:</strong> {{copy.imprint}}</p>
+    <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
+    {% endfor %}
+  </div>
+{% endblock %}
